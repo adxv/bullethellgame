@@ -161,7 +161,6 @@ void Game::deleteBullets()
 
 void Game::spawnProjectiles()
 {
-	// Assuming only one enemy for simplicity, adjust as needed for multiple enemies
 	Enemy& enemy = this->Enemies[0];
 	Vector2f enemyPosition = enemy.getShape().getPosition();
 
@@ -172,10 +171,9 @@ void Game::spawnProjectiles()
 	}
 	else {
 		if (this->Projectiles.size() < this->maxProjectiles) {
-			// Calculate direction based on enemy movement direction
 			float angle = this->rotationAngle;
 			if (enemyDirection == 1) {
-				angle += 180.f; // Adjust angle for rightward movement
+				angle += 180.f;
 			}
 
 			for (int i = 0; i < projectileSpawnAmount; ++i)
@@ -248,7 +246,6 @@ void Game::simpleMoveFunction(CircleShape& shape, RenderWindow* window, float sp
 
 	Vector2f movement = direction * speed;
 
-	// Check if shape is close enough to destination to snap to it
 	if (std::abs(destination.x - currentPosition.x) <= std::abs(movement.x)
 		&& std::abs(destination.y - currentPosition.y) <= std::abs(movement.y)) {
 		shape.setPosition(destination);
@@ -257,10 +254,8 @@ void Game::simpleMoveFunction(CircleShape& shape, RenderWindow* window, float sp
 		shape.move(movement);
 	}
 
-	// Check and reverse direction if shape goes out of window bounds
 	FloatRect windowBounds(Vector2f(0.f, 0.f), window->getView().getSize());
 	if (!windowBounds.contains(shape.getPosition())) {
-		// Reverse direction by moving back into bounds
 		shape.setPosition(std::max(windowBounds.left, std::min(windowBounds.left + windowBounds.width, shape.getPosition().x)),
 			std::max(windowBounds.top, std::min(windowBounds.top + windowBounds.height, shape.getPosition().y)));
 	}
@@ -321,5 +316,3 @@ void Game::render()
 
 	this->w->display();
 }
-
-//functions
